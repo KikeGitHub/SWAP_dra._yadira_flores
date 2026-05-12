@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Testimonios – Dra. Yadira Flores</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="js/tailwind.config.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased">
+
+<!-- TopNavBar -->
+<nav class="sticky top-0 w-full z-50 bg-surface/90 backdrop-blur-md shadow-sm">
+  <div class="flex items-center gap-4 max-w-7xl mx-auto px-grid-margin py-4">
+    <a href="code.html"
+       class="flex items-center gap-2 text-primary hover:opacity-70 transition-opacity font-label-caps text-label-caps">
+      <span class="material-symbols-outlined" style="font-size:20px">arrow_back</span>
+      Regresar
+    </a>
+    <span class="text-outline-variant">|</span>
+    <a href="code.html"
+       class="font-headline-md text-headline-md text-primary tracking-tight hover:opacity-80 transition-opacity">
+      Dra. Yadira Flores
+    </a>
+  </div>
+</nav>
+
+<!-- Page Header -->
+<header class="max-w-7xl mx-auto px-grid-margin pt-12 pb-10 text-center">
+  <span class="font-label-caps text-label-caps text-primary uppercase tracking-widest">Opiniones verificadas</span>
+  <h1 class="font-headline-md text-headline-md text-primary mt-2 mb-4">Lo que dicen nuestras pacientes</h1>
+  <p class="font-body-md text-body-md text-on-surface-variant max-w-xl mx-auto">
+    Todas las opiniones provienen de citas verificadas en el Consultorio Tuxpan.
+  </p>
+  <!-- Summary Bar -->
+  <div class="inline-flex items-center gap-3 mt-8 bg-surface px-6 py-4 rounded-[24px] shadow-[0_4px_30px_rgba(74,74,74,0.07)]">
+    <div class="flex gap-1">
+      <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:22px">star</span>
+      <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:22px">star</span>
+      <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:22px">star</span>
+      <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:22px">star</span>
+      <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:22px">star</span>
+    </div>
+    <span class="font-headline-sm text-headline-sm text-primary">5.0</span>
+    <span class="text-outline-variant">·</span>
+    <span class="font-body-sm text-body-sm text-on-surface-variant">10 opiniones verificadas</span>
+  </div>
+</header>
+
+<!-- Search -->
+<div class="max-w-2xl mx-auto px-grid-margin mb-10">
+  <div class="relative">
+    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant" style="font-size:20px">search</span>
+    <input id="search-testimonios" type="text" placeholder="Buscar en las opiniones..."
+           autocomplete="off"
+           class="w-full pl-12 pr-4 py-3 rounded-lg border border-outline-variant bg-surface focus:outline-none focus:ring-2 focus:border-primary font-body-md text-body-md text-on-surface transition-colors placeholder:text-on-surface-variant"/>
+  </div>
+</div>
+
+<!-- Cards Grid -->
+<main class="max-w-7xl mx-auto px-grid-margin pb-24">
+  <div id="testimonios-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <!-- Card 1 -->
+    <article class="testimonio-card bg-surface rounded-[24px] p-8 shadow-[0_4px_30px_rgba(74,74,74,0.06)] flex flex-col gap-5 hover:shadow-[0_8px_40px_rgba(74,74,74,0.10)] transition-all">
+      <div class="flex items-center gap-4">
+        <div class="w-11 h-11 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-headline-sm text-headline-sm shrink-0 select-none">F</div>
+        <div>
+          <p class="font-body-md text-body-md font-semibold text-on-surface">FM</p>
+          <span class="inline-flex items-center gap-1 mt-1 font-label-caps text-label-caps text-primary bg-primary-fixed px-2 py-0.5 rounded-full">
+            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1; font-size:13px">verified</span>
+            Cita verificada
+          </span>
+        </div>
+        <div class="ml-auto flex gap-0.5">
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+        </div>
+      </div>
+      <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed flex-1 testimonio-texto">
+        Fue mi primer consulta, la doctora me explicó a detalle cada paso de la revisión y el tratamiento. Así como posibles diagnósticos a confirmar con estudios de laboratorio.
+      </p>
+      <footer class="flex flex-wrap items-center gap-x-3 gap-y-1 pt-4 border-t border-surface-variant">
+        <span class="flex items-center gap-1 font-body-sm text-body-sm text-on-surface-variant">
+          <span class="material-symbols-outlined" style="font-size:15px">calendar_month</span>3 de mayo de 2026
+        </span>
+        <span class="text-outline-variant">·</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Consultorio Tuxpan</span>
+        <span class="text-outline-variant">·</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Primera vez</span>
+      </footer>
+    </article>
+
+    <!-- Card 2 -->
+    <article class="testimonio-card bg-surface rounded-[24px] p-8 shadow-[0_4px_30px_rgba(74,74,74,0.06)] flex flex-col gap-5 hover:shadow-[0_8px_40px_rgba(74,74,74,0.10)] transition-all">
+      <div class="flex items-center gap-4">
+        <div class="w-11 h-11 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-headline-sm text-headline-sm shrink-0 select-none">A</div>
+        <div>
+          <p class="font-body-md text-body-md font-semibold text-on-surface">AD</p>
+          <span class="inline-flex items-center gap-1 mt-1 font-label-caps text-label-caps text-primary bg-primary-fixed px-2 py-0.5 rounded-full">
+            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1; font-size:13px">verified</span>
+            Cita verificada
+          </span>
+        </div>
+        <div class="ml-auto flex gap-0.5">
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+        </div>
+      </div>
+      <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed flex-1 testimonio-texto">
+        Excelente trato, su explicación fue muy detallada y objetiva. Además de que la doctora genera mucha comodidad y confianza al explicar con tanto detalle, antes de dar opciones para un tratamiento.
+      </p>
+      <footer class="flex flex-wrap items-center gap-x-3 gap-y-1 pt-4 border-t border-surface-variant">
+        <span class="flex items-center gap-1 font-body-sm text-body-sm text-on-surface-variant">
+          <span class="material-symbols-outlined" style="font-size:15px">calendar_month</span>28 de abril de 2026
+        </span>
+        <span class="text-outline-variant">·</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Consultorio Tuxpan</span>
+        <span class="text-outline-variant">·</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Primera vez</span>
+      </footer>
+    </article>
+
+    <!-- Card 3 -->
+    <article class="testimonio-card bg-surface rounded-[24px] p-8 shadow-[0_4px_30px_rgba(74,74,74,0.06)] flex flex-col gap-5 hover:shadow-[0_8px_40px_rgba(74,74,74,0.10)] transition-all">
+      <div class="flex items-center gap-4">
+        <div class="w-11 h-11 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-headline-sm text-headline-sm shrink-0 select-none">A</div>
+        <div>
+          <p class="font-body-md text-body-md font-semibold text-on-surface">Alma Yasmin Sánchez Ruiz</p>
+          <span class="inline-flex items-center gap-1 mt-1 font-label-caps text-label-caps text-primary bg-primary-fixed px-2 py-0.5 rounded-full">
+            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1; font-size:13px">verified</span>
+            Cita verificada
+          </span>
+        </div>
+        <div class="ml-auto flex gap-0.5 shrink-0">
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+        </div>
+      </div>
+      <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed flex-1 testimonio-texto">
+        Excelente Dra. Explica todo detalladamente, muy profesional, amable y muestra mucha empatía, fue mi primera consulta y definitivamente me quedo con ella. Muchas gracias Dra.
+      </p>
+      <footer class="flex flex-wrap items-center gap-x-3 gap-y-1 pt-4 border-t border-surface-variant">
+        <span class="flex items-center gap-1 font-body-sm text-body-sm text-on-surface-variant">
+          <span class="material-symbols-outlined" style="font-size:15px">calendar_month</span>28 de abril de 2026
+        </span>
+        <span class="text-outline-variant">·</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Consultorio Tuxpan</span>
+        <span class="text-outline-variant">·</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Primera vez</span>
+      </footer>
+    </article>
+
+    <!-- Card 4 -->
+    <article class="testimonio-card bg-surface rounded-[24px] p-8 shadow-[0_4px_30px_rgba(74,74,74,0.06)] flex flex-col gap-5 hover:shadow-[0_8px_40px_rgba(74,74,74,0.10)] transition-all">
+      <div class="flex items-center gap-4">
+        <div class="w-11 h-11 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center font-headline-sm text-headline-sm shrink-0 select-none">T</div>
+        <div>
+          <p class="font-body-md text-body-md font-semibold text-on-surface">TA</p>
+          <span class="inline-flex items-center gap-1 mt-1 font-label-caps text-label-caps text-primary bg-primary-fixed px-2 py-0.5 rounded-full">
+            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1; font-size:13px">verified</span>
+            Cita verificada
+          </span>
+        </div>
+        <div class="ml-auto flex gap-0.5">
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+        </div>
+      </div>
+      <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed flex-1 testimonio-texto">
+        La Dra. Yadira es muy humana y ayuda mucho en todo lo que necesites, pero sobre todo te explica con lujo de detalle todo, es muy honesta y por eso mismo hace que la consulta sea clara.
+      </p>
+      <footer class="flex flex-wrap items-center gap-x-3 gap-y-1 pt-4 border-t border-surface-variant">
+        <span class="flex items-center gap-1 font-body-sm text-body-sm text-on-surface-variant">
+          <span class="material-symbols-outlined" style="font-size:15px">calendar_month</span>21 de abril de 2026
+        </span>
+        <span class="text-outline-variant">·</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Consultorio Tuxpan</span>
+        <span class="text-outline-variant">·</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Primera vez</span>
+      </footer>
+    </article>
+
+    <!-- Card 5 -->
+    <article class="testimonio-card bg-surface rounded-[24px] p-8 shadow-[0_4px_30px_rgba(74,74,74,0.06)] flex flex-col gap-5 hover:shadow-[0_8px_40px_rgba(74,74,74,0.10)] transition-all">
+      <div class="flex items-center gap-4">
+        <div class="w-11 h-11 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-headline-sm text-headline-sm shrink-0 select-none">D</div>
+        <div>
+          <p class="font-body-md text-body-md font-semibold text-on-surface">Daniela Navarro</p>
+          <span class="inline-flex items-center gap-1 mt-1 font-label-caps text-label-caps text-primary bg-primary-fixed px-2 py-0.5 rounded-full">
+            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1; font-size:13px">verified</span>
+            Cita verificada
+          </span>
+        </div>
+        <div class="ml-auto flex gap-0.5 shrink-0">
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+        </div>
+      </div>
+      <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed flex-1 testimonio-texto">
+        Excelente el trato con la doctora, súper explicativo todo, posibles diagnósticos que ningún otro doctor me hubiera dicho jamás y eso que he visitado muchos, me encantó porque aparte sabe muchísimo del tema, muchas gracias.
+      </p>
+      <footer class="flex flex-wrap items-center gap-x-3 gap-y-1 pt-4 border-t border-surface-variant">
+        <span class="flex items-center gap-1 font-body-sm text-body-sm text-on-surface-variant">
+          <span class="material-symbols-outlined" style="font-size:15px">calendar_month</span>12 de abril de 2026
+        </span>
+        <span class="text-outline-variant">·</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Consultorio Tuxpan</span>
+        <span class="text-outline-variant">·</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Primera vez</span>
+      </footer>
+    </article>
+
+    <!-- Card 6 -->
+    <article class="testimonio-card bg-surface rounded-[24px] p-8 shadow-[0_4px_30px_rgba(74,74,74,0.06)] flex flex-col gap-5 hover:shadow-[0_8px_40px_rgba(74,74,74,0.10)] transition-all">
+      <div class="flex items-center gap-4">
+        <div class="w-11 h-11 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-headline-sm text-headline-sm shrink-0 select-none">L</div>
+        <div>
+          <p class="font-body-md text-body-md font-semibold text-on-surface">Lupis Sodi</p>
+          <span class="inline-flex items-center gap-1 mt-1 font-label-caps text-label-caps text-primary bg-primary-fixed px-2 py-0.5 rounded-full">
+            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1; font-size:13px">verified</span>
+            Cita verificada
+          </span>
+        </div>
+        <div class="ml-auto flex gap-0.5 shrink-0">
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+        </div>
+      </div>
+      <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed flex-1 testimonio-texto">
+        Excelente doctora te explica a detalle lo que tienes, es muy amable. Recomendable, muchas más doctoras así.
+      </p>
+      <footer class="flex flex-wrap items-center gap-x-3 gap-y-1 pt-4 border-t border-surface-variant">
+        <span class="flex items-center gap-1 font-body-sm text-body-sm text-on-surface-variant">
+          <span class="material-symbols-outlined" style="font-size:15px">calendar_month</span>10 de abril de 2026
+        </span>
+        <span class="text-outline-variant">·</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Consultorio Tuxpan</span>
+        <span class="text-outline-variant">·</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Primera vez</span>
+      </footer>
+    </article>
+
+    <!-- Card 7 -->
+    <article class="testimonio-card bg-surface rounded-[24px] p-8 shadow-[0_4px_30px_rgba(74,74,74,0.06)] flex flex-col gap-5 hover:shadow-[0_8px_40px_rgba(74,74,74,0.10)] transition-all">
+      <div class="flex items-center gap-4">
+        <div class="w-11 h-11 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center font-headline-sm text-headline-sm shrink-0 select-none">M</div>
+        <div>
+          <p class="font-body-md text-body-md font-semibold text-on-surface">MJNG</p>
+          <span class="inline-flex items-center gap-1 mt-1 font-label-caps text-label-caps text-primary bg-primary-fixed px-2 py-0.5 rounded-full">
+            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1; font-size:13px">verified</span>
+            Cita verificada
+          </span>
+        </div>
+        <div class="ml-auto flex gap-0.5">
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+        </div>
+      </div>
+      <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed flex-1 testimonio-texto">
+        Acertada y clara, mi hija adolescente se sintió muy cómoda.
+      </p>
+      <footer class="flex flex-wrap items-center gap-x-3 gap-y-1 pt-4 border-t border-surface-variant">
+        <span class="flex items-center gap-1 font-body-sm text-body-sm text-on-surface-variant">
+          <span class="material-symbols-outlined" style="font-size:15px">calendar_month</span>2 de abril de 2026
+        </span>
+        <span class="text-outline-variant">·</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Consultorio Tuxpan</span>
+        <span class="text-outline-variant">·</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Primera vez</span>
+      </footer>
+    </article>
+
+    <!-- Card 8 -->
+    <article class="testimonio-card bg-surface rounded-[24px] p-8 shadow-[0_4px_30px_rgba(74,74,74,0.06)] flex flex-col gap-5 hover:shadow-[0_8px_40px_rgba(74,74,74,0.10)] transition-all">
+      <div class="flex items-center gap-4">
+        <div class="w-11 h-11 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-headline-sm text-headline-sm shrink-0 select-none">N</div>
+        <div>
+          <p class="font-body-md text-body-md font-semibold text-on-surface">Nancy</p>
+          <span class="inline-flex items-center gap-1 mt-1 font-label-caps text-label-caps text-primary bg-primary-fixed px-2 py-0.5 rounded-full">
+            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1; font-size:13px">verified</span>
+            Cita verificada
+          </span>
+        </div>
+        <div class="ml-auto flex gap-0.5 shrink-0">
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+        </div>
+      </div>
+      <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed flex-1 testimonio-texto">
+        La Dra. fue muy amable, explicó de forma clara lo que tengo y resolvió todas mis dudas. Muchas gracias Dra Yadira.
+      </p>
+      <footer class="flex flex-wrap items-center gap-x-3 gap-y-1 pt-4 border-t border-surface-variant">
+        <span class="flex items-center gap-1 font-body-sm text-body-sm text-on-surface-variant">
+          <span class="material-symbols-outlined" style="font-size:15px">calendar_month</span>28 de marzo de 2026
+        </span>
+        <span class="text-outline-variant">·</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Consultorio Tuxpan</span>
+        <span class="text-outline-variant">·</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Primera vez</span>
+      </footer>
+    </article>
+
+    <!-- Card 9 -->
+    <article class="testimonio-card bg-surface rounded-[24px] p-8 shadow-[0_4px_30px_rgba(74,74,74,0.06)] flex flex-col gap-5 hover:shadow-[0_8px_40px_rgba(74,74,74,0.10)] transition-all">
+      <div class="flex items-center gap-4">
+        <div class="w-11 h-11 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-headline-sm text-headline-sm shrink-0 select-none">M</div>
+        <div>
+          <p class="font-body-md text-body-md font-semibold text-on-surface">Mariana O</p>
+          <span class="inline-flex items-center gap-1 mt-1 font-label-caps text-label-caps text-primary bg-primary-fixed px-2 py-0.5 rounded-full">
+            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1; font-size:13px">verified</span>
+            Cita verificada
+          </span>
+        </div>
+        <div class="ml-auto flex gap-0.5 shrink-0">
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+        </div>
+      </div>
+      <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed flex-1 testimonio-texto">
+        Me gustó mucho el trato de la doctora. Explicó muy bien todos los resultados de los análisis. Consultorio pequeño pero bien equipado. Estoy satisfecha con el tratamiento y seguramente regresaré para el seguimiento del mismo.
+      </p>
+      <footer class="flex flex-wrap items-center gap-x-3 gap-y-1 pt-4 border-t border-surface-variant">
+        <span class="flex items-center gap-1 font-body-sm text-body-sm text-on-surface-variant">
+          <span class="material-symbols-outlined" style="font-size:15px">calendar_month</span>26 de marzo de 2026
+        </span>
+        <span class="text-outline-variant">·</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Consultorio Tuxpan</span>
+        <span class="text-outline-variant">·</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Primera vez</span>
+      </footer>
+    </article>
+
+    <!-- Card 10 -->
+    <article class="testimonio-card bg-surface rounded-[24px] p-8 shadow-[0_4px_30px_rgba(74,74,74,0.06)] flex flex-col gap-5 hover:shadow-[0_8px_40px_rgba(74,74,74,0.10)] transition-all">
+      <div class="flex items-center gap-4">
+        <div class="w-11 h-11 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center font-headline-sm text-headline-sm shrink-0 select-none">C</div>
+        <div>
+          <p class="font-body-md text-body-md font-semibold text-on-surface">Paciente anónima</p>
+          <span class="inline-flex items-center gap-1 mt-1 font-label-caps text-label-caps text-primary bg-primary-fixed px-2 py-0.5 rounded-full">
+            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1; font-size:13px">verified</span>
+            Cita verificada
+          </span>
+        </div>
+        <div class="ml-auto flex gap-0.5">
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+          <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1; font-size:18px">star</span>
+        </div>
+      </div>
+      <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed flex-1 testimonio-texto">
+        Excelente doctora, sabe muchísimo, es súper amable y respetuosa y te hace sentir en muy buenas manos.
+      </p>
+      <footer class="flex flex-wrap items-center gap-x-3 gap-y-1 pt-4 border-t border-surface-variant">
+        <span class="flex items-center gap-1 font-body-sm text-body-sm text-on-surface-variant">
+          <span class="material-symbols-outlined" style="font-size:15px">calendar_month</span>Consultorio Tuxpan
+        </span>
+      </footer>
+    </article>
+
+  </div>
+
+  <!-- No results -->
+  <p id="no-results-t" class="hidden text-center font-body-md text-body-md text-on-surface-variant py-16">
+    No se encontraron opiniones para tu búsqueda.
+  </p>
+
+  <!-- CTA Agendar -->
+  <div class="mt-20 text-center bg-surface-container-low rounded-[32px] px-8 py-14 shadow-[0_4px_30px_rgba(74,74,74,0.06)]">
+    <h2 class="font-headline-sm text-headline-sm text-primary mb-3">¿Lista para tu primera consulta?</h2>
+    <p class="font-body-md text-body-md text-on-surface-variant mb-8 max-w-md mx-auto">
+      Únete a las pacientes que confían en la Dra. Yadira Flores para su salud.
+    </p>
+    <a href="code.html"
+       class="inline-flex items-center gap-2 bg-primary-container text-on-primary-container px-8 py-3 rounded-lg font-body-md text-body-md font-semibold hover:scale-[1.02] transition-transform shadow-[0_4px_20px_rgba(74,74,74,0.08)]">
+      <span class="material-symbols-outlined" style="font-size:20px">calendar_month</span>
+      Agendar cita
+    </a>
+  </div>
+</main>
+
+<script>
+  (function () {
+    var searchInput = document.getElementById("search-testimonios");
+    var cards = document.querySelectorAll(".testimonio-card");
+    var noResults = document.getElementById("no-results-t");
+
+    searchInput.addEventListener("input", function () {
+      var q = this.value.toLowerCase().trim();
+      var visible = 0;
+      cards.forEach(function (card) {
+        var text = card.querySelector(".testimonio-texto").textContent.toLowerCase();
+        var name = card.querySelector("p.font-semibold").textContent.toLowerCase();
+        if (!q || text.includes(q) || name.includes(q)) {
+          card.style.display = "";
+          visible++;
+        } else {
+          card.style.display = "none";
+        }
+      });
+      noResults.classList.toggle("hidden", visible > 0);
+    });
+  })();
+</script>
+
+</body>
+</html>
