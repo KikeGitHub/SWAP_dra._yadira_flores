@@ -68,6 +68,74 @@
         document.body.style.overflow = "";
     }
 
+    /* ── inline Google booking ── */
+    function initInlineBooking() {
+        var section = document.getElementById("reserva-google-inline");
+        var shell = document.getElementById("google-booking-shell");
+        var frame = document.getElementById("google-booking-frame");
+        var fallback = document.getElementById("google-booking-fallback");
+        if (!section || !shell || !frame || !fallback) return;
+
+        var cfg = window.GoogleBookingConfig || {};
+        var bookingUrl = cfg.bookingUrl || frame.getAttribute("data-booking-url") || "";
+        frame.setAttribute("data-booking-url", bookingUrl);
+        fallback.href = bookingUrl;
+
+        // Keeps the current WhatsApp modal as fallback while URL is still placeholder.
+        var hasRealUrl = bookingUrl && bookingUrl.indexOf("TU_URL_DE_RESERVA") === -1;
+        if (!hasRealUrl) {
+            shell.classList.add("is-loaded");
+            shell.setAttribute("aria-busy", "false");
+            return;
+        }
+
+        var loaded = false;
+        var markLoaded = function () {
+            if (loaded) return;
+            loaded = true;
+            shell.classList.add("is-loaded");
+            shell.setAttribute("aria-busy", "false");
+        };
+
+        frame.addEventListener("load", markLoaded, { once: true });
+
+        // Timebox loading feedback to avoid spinner hanging forever in blocked contexts.
+        setTimeout(function () {
+            if (!loaded) {
+                shell.classList.add("has-timeout");
+                shell.setAttribute("aria-busy", "false");
+            }
+        }, 12000);
+
+        var hydrateFrame = function () {
+            if (frame.getAttribute("src")) return;
+            frame.setAttribute("src", bookingUrl);
+        };
+
+        if ("IntersectionObserver" in window) {
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        hydrateFrame();
+                        observer.disconnect();
+                    }
+                });
+            }, { rootMargin: "220px 0px" });
+            observer.observe(section);
+        } else {
+            hydrateFrame();
+        }
+    }
+
+    function goToInlineBooking() {
+        var section = document.getElementById("reserva-google-inline");
+        if (!section) {
+            openModal();
+            return;
+        }
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
     /* ── tabs ── */
     function switchTab(tab) {
         state.tab = tab;
@@ -233,11 +301,13 @@
 
     /* ── init ── */
     document.addEventListener("DOMContentLoaded", function () {
+        initInlineBooking();
+
         // open triggers
         document.querySelectorAll("[data-open-agenda]").forEach(function (el) {
             el.addEventListener("click", function (e) {
                 e.preventDefault();
-                openModal();
+                goToInlineBooking();
             });
         });
 

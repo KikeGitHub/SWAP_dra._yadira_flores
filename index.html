@@ -9,9 +9,105 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <meta name="description" content="Dra. Yadira Flores – Ginecóloga y Obstetra de Alta Especialidad en CDMX. Consultas presenciales en Roma Sur y videoconsultas. +95 opiniones positivas."/>
-<style>html{scroll-behavior:smooth}</style>
+<style>
+html{scroll-behavior:smooth}
+
+body{background:linear-gradient(180deg,#efedec 0%,#e6e3e2 100%)}
+.page-surface{
+  max-width:min(1520px,calc(100% - 20px));
+  margin:10px auto;
+  background:#fbf9f8;
+  border:1px solid #ddd8d8;
+  border-radius:34px;
+  overflow:hidden;
+  box-shadow:0 20px 60px rgba(74,74,74,.12);
+}
+
+.bg-surface.rounded-\[24px\],
+.bg-surface.rounded-\[32px\],
+.booking-surface{
+  border:1px solid #e9e4e4;
+  box-shadow:0 10px 28px rgba(74,74,74,.08);
+}
+
+/* Demo booking widget: mobile-first, premium and stable layout */
+.booking-shell{
+  position:relative;
+  min-height:clamp(680px,74vh,920px);
+  border-radius:28px;
+  overflow:hidden;
+  background:linear-gradient(165deg,#ffffff 0%,#f6f4f4 100%);
+  border:1px solid #e4e2e2;
+  box-shadow:0 12px 42px rgba(74,74,74,0.10);
+}
+.booking-layout{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:20px;
+  padding:20px;
+}
+.booking-surface{
+  background:#fff;
+  border:1px solid #e4e2e2;
+  border-radius:20px;
+  box-shadow:0 8px 24px rgba(74,74,74,.06);
+}
+.booking-day,
+.booking-slot{
+  border:1px solid #d4c2c3;
+  background:#fff;
+  color:#504444;
+  transition:all .18s ease;
+}
+.booking-day:hover,
+.booking-slot:hover{border-color:#7c5357;background:#fdf8f8}
+.booking-day.is-active,
+.booking-slot.is-active{background:#7c5357;color:#fff;border-color:#7c5357;box-shadow:0 8px 18px rgba(124,83,87,.25)}
+.booking-day.is-disabled,
+.booking-slot.is-disabled{opacity:.45;cursor:not-allowed;background:#f5f3f3}
+.booking-loader{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  background:linear-gradient(180deg,rgba(255,255,255,.94),rgba(245,243,243,.96));
+  transition:opacity .3s ease,visibility .3s ease;
+}
+.booking-shell.is-loaded .booking-loader,
+.booking-shell.has-timeout .booking-loader{
+  opacity:0;
+  visibility:hidden;
+}
+.booking-spinner{
+  width:46px;
+  height:46px;
+  border-radius:999px;
+  border:2px solid rgba(124,83,87,.18);
+  border-top-color:#7c5357;
+  animation:bookingSpin .8s linear infinite;
+}
+@keyframes bookingSpin{to{transform:rotate(360deg)}}
+
+@media (min-width:960px){
+  .booking-layout{grid-template-columns:1.2fr .8fr;padding:26px}
+}
+
+@media (max-width:640px){
+  .page-surface{
+    max-width:calc(100% - 10px);
+    margin:5px auto;
+    border-radius:18px;
+  }
+  .booking-shell{min-height:760px}
+  .booking-layout{padding:14px}
+}
+</style>
 </head>
 <body class="bg-background text-on-background font-body-md antialiased pt-20">
+<div class="page-surface">
 <!-- TopNavBar -->
 <nav class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-md shadow-sm">
 <div class="flex justify-between items-center max-w-7xl mx-auto px-grid-margin py-4">
@@ -19,8 +115,8 @@
                 Dra. Yadira Flores
             </a>
 <div class="hidden md:flex gap-8 items-center">
-<a class="font-label-caps text-label-caps text-tertiary hover:text-primary transition-colors" href="#servicios">Servicios</a>
 <a class="font-label-caps text-label-caps text-tertiary hover:text-primary transition-colors" href="#sobre-mi">Sobre Mí</a>
+<a class="font-label-caps text-label-caps text-tertiary hover:text-primary transition-colors" href="#servicios">Servicios</a>
 <a class="font-label-caps text-label-caps text-tertiary hover:text-primary transition-colors" href="#enfermedades">Padecimientos</a>
 <a class="font-label-caps text-label-caps text-tertiary hover:text-primary transition-colors" href="testimonios.html">Testimonios</a>
 <a class="font-label-caps text-label-caps text-tertiary hover:text-primary transition-colors" href="#ubicacion">Ubicación</a>
@@ -38,8 +134,8 @@
 <!-- Mobile Menu -->
 <div id="mobile-menu" class="hidden fixed top-[73px] left-0 right-0 z-40 bg-surface/97 backdrop-blur-md shadow-lg border-t border-surface-variant md:hidden">
   <div class="flex flex-col px-grid-margin py-4 gap-0.5">
-    <a class="font-label-caps text-label-caps text-tertiary hover:text-primary hover:bg-surface-container-low transition-all px-4 py-3 rounded-lg" href="#servicios">Servicios</a>
     <a class="font-label-caps text-label-caps text-tertiary hover:text-primary hover:bg-surface-container-low transition-all px-4 py-3 rounded-lg" href="#sobre-mi">Sobre Mí</a>
+    <a class="font-label-caps text-label-caps text-tertiary hover:text-primary hover:bg-surface-container-low transition-all px-4 py-3 rounded-lg" href="#servicios">Servicios</a>
     <a class="font-label-caps text-label-caps text-tertiary hover:text-primary hover:bg-surface-container-low transition-all px-4 py-3 rounded-lg" href="#enfermedades">Padecimientos</a>
     <a class="font-label-caps text-label-caps text-tertiary hover:text-primary hover:bg-surface-container-low transition-all px-4 py-3 rounded-lg" href="testimonios.html">Testimonios</a>
     <a class="font-label-caps text-label-caps text-tertiary hover:text-primary hover:bg-surface-container-low transition-all px-4 py-3 rounded-lg" href="#ubicacion">Ubicación</a>
@@ -116,7 +212,7 @@
 <div class="md:w-5/12">
 <div class="relative">
 <div class="absolute inset-0 bg-primary-container/10 rounded-[40px] transform -translate-x-4 translate-y-4"></div>
-<img alt="Dra. Yadira Flores en su labor médica" class="w-full h-auto object-cover rounded-[40px] relative z-10 shadow-[0_8px_40px_rgba(74,74,74,0.1)]" src="https://lh3.googleusercontent.com/aida/ADBb0ujyRtEeu_L1JlmTA9le-RaiFzJ4ouwR__li1kgaXxhtRZUWLWWmKllGBnygwczhIl-Q-VPYehxpIlaCnsj5naON55b6wCUFwpEt5fUW1CpB1Hw9FaO2XPI2dbFBUZRGcgfgQxfpGhWUeDRyyzqd2eSzDDnokZD1V6IcVEFyk6Cr7Gv3pZGp_9gdfdI6Bo5gd41sefla-kKG8zm27VL0l7CSbWrxqCRzaT-ZITcae74F9S95T-zFmqGyETah1BMbyRF0ZlmPFehi"/>
+<img alt="Dra. Yadira Flores en su labor médica" class="w-full h-auto object-cover rounded-[40px] relative z-10 shadow-[0_8px_40px_rgba(74,74,74,0.1)]" src="logotipo-ginecologia_848918-17006.avif"/>
 </div>
 </div>
 <!-- Right Column: Content -->
@@ -221,35 +317,38 @@
 <!-- Enfermedades Tratadas -->
 <section class="bg-surface-container-low py-section-gap-desktop" id="enfermedades">
 <div class="max-w-7xl mx-auto px-grid-margin">
-<div class="text-center max-w-2xl mx-auto mb-12">
-<span class="font-label-caps text-label-caps text-primary uppercase tracking-widest">Condiciones médicas</span>
-<h2 class="font-headline-md text-headline-md text-primary mt-2 mb-4">Enfermedades y Condiciones Tratadas</h2>
-<p class="font-body-md text-body-md text-on-surface-variant">Atención especializada en una amplia variedad de condiciones ginecológicas, obstétricas y de salud femenina.</p>
+<div class="text-center max-w-3xl mx-auto mb-12">
+<span class="font-label-caps text-label-caps text-primary uppercase tracking-widest">Padecimientos frecuentes</span>
+<h2 class="font-headline-md text-headline-md text-primary mt-2 mb-4">Lo que atendemos con mayor frecuencia</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Seleccionamos las 20 condiciones más consultadas para que encuentres rápidamente si podemos ayudarte.</p>
 </div>
-<!-- Search Bar -->
-<div class="relative max-w-xl mx-auto mb-8">
-<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant" style="font-size:20px">search</span>
-<input autocomplete="off" class="w-full pl-12 pr-4 py-3 rounded-lg border border-outline-variant bg-surface focus:outline-none focus:ring-2 focus:border-primary font-body-md text-body-md text-on-surface transition-colors placeholder:text-on-surface-variant" id="search-enfermedades" placeholder="Buscar una condición..." type="text"/>
+
+<div class="bg-surface rounded-[24px] p-6 md:p-8 shadow-[0_4px_30px_rgba(74,74,74,0.06)]">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+    <span class="bg-primary-container text-on-primary-container px-4 py-2 rounded-full font-body-sm text-body-sm text-center">Síndrome de ovario poliquístico</span>
+    <span class="bg-primary-container text-on-primary-container px-4 py-2 rounded-full font-body-sm text-body-sm text-center">Endometriosis</span>
+    <span class="bg-primary-container text-on-primary-container px-4 py-2 rounded-full font-body-sm text-body-sm text-center">Miomas uterinos</span>
+    <span class="bg-primary-container text-on-primary-container px-4 py-2 rounded-full font-body-sm text-body-sm text-center">Sangrado uterino anormal</span>
+    <span class="bg-secondary-container text-on-secondary-container px-4 py-2 rounded-full font-body-sm text-body-sm text-center">Control prenatal</span>
+    <span class="bg-secondary-container text-on-secondary-container px-4 py-2 rounded-full font-body-sm text-body-sm text-center">Embarazo de alto riesgo</span>
+    <span class="bg-secondary-container text-on-secondary-container px-4 py-2 rounded-full font-body-sm text-body-sm text-center">Preeclampsia</span>
+    <span class="bg-secondary-container text-on-secondary-container px-4 py-2 rounded-full font-body-sm text-body-sm text-center">Diabetes gestacional</span>
+    <span class="bg-tertiary-container text-on-tertiary-container px-4 py-2 rounded-full font-body-sm text-body-sm text-center">VPH y colposcopía</span>
+    <span class="bg-tertiary-container text-on-tertiary-container px-4 py-2 rounded-full font-body-sm text-body-sm text-center">Infecciones vaginales</span>
+    <span class="bg-tertiary-container text-on-tertiary-container px-4 py-2 rounded-full font-body-sm text-body-sm text-center">ETS (clamidia, herpes, etc.)</span>
+    <span class="bg-tertiary-container text-on-tertiary-container px-4 py-2 rounded-full font-body-sm text-body-sm text-center">Quistes ováricos</span>
+    <span class="bg-primary-fixed text-on-primary-fixed px-4 py-2 rounded-full font-body-sm text-body-sm text-center">Infertilidad</span>
+    <span class="bg-primary-fixed text-on-primary-fixed px-4 py-2 rounded-full font-body-sm text-body-sm text-center">Pérdida gestacional recurrente</span>
+    <span class="bg-primary-fixed text-on-primary-fixed px-4 py-2 rounded-full font-body-sm text-body-sm text-center">Menopausia y climaterio</span>
+    <span class="bg-primary-fixed text-on-primary-fixed px-4 py-2 rounded-full font-body-sm text-body-sm text-center">Trastornos hormonales</span>
+    <span class="bg-secondary-fixed text-on-secondary-fixed px-4 py-2 rounded-full font-body-sm text-body-sm text-center">Dolor pélvico crónico</span>
+    <span class="bg-secondary-fixed text-on-secondary-fixed px-4 py-2 rounded-full font-body-sm text-body-sm text-center">Patología mamaria benigna</span>
+    <span class="bg-secondary-fixed text-on-secondary-fixed px-4 py-2 rounded-full font-body-sm text-body-sm text-center">Infección urinaria recurrente</span>
+    <span class="bg-secondary-fixed text-on-secondary-fixed px-4 py-2 rounded-full font-body-sm text-body-sm text-center">Planificación familiar</span>
+  </div>
+
+  <p class="text-center font-body-sm text-body-sm text-on-surface-variant mt-6">Si no ves tu caso en esta lista, escríbenos por WhatsApp o agenda valoración para orientarte.</p>
 </div>
-<!-- Category Filters -->
-<div class="flex flex-wrap gap-2 justify-center mb-10" id="category-filters">
-<button class="filter-btn bg-primary text-on-primary px-4 py-2 rounded-full font-label-caps text-label-caps transition-all hover:scale-[1.03]" data-cat="all">Todas</button>
-<button class="filter-btn bg-surface-container text-on-surface-variant px-4 py-2 rounded-full font-label-caps text-label-caps transition-all hover:scale-[1.03] hover:bg-primary-container hover:text-on-primary-container" data-cat="ginecologia">Ginecología</button>
-<button class="filter-btn bg-surface-container text-on-surface-variant px-4 py-2 rounded-full font-label-caps text-label-caps transition-all hover:scale-[1.03] hover:bg-primary-container hover:text-on-primary-container" data-cat="embarazo">Embarazo y Parto</button>
-<button class="filter-btn bg-surface-container text-on-surface-variant px-4 py-2 rounded-full font-label-caps text-label-caps transition-all hover:scale-[1.03] hover:bg-primary-container hover:text-on-primary-container" data-cat="ets">ETS</button>
-<button class="filter-btn bg-surface-container text-on-surface-variant px-4 py-2 rounded-full font-label-caps text-label-caps transition-all hover:scale-[1.03] hover:bg-primary-container hover:text-on-primary-container" data-cat="mama">Patología Mamaria</button>
-<button class="filter-btn bg-surface-container text-on-surface-variant px-4 py-2 rounded-full font-label-caps text-label-caps transition-all hover:scale-[1.03] hover:bg-primary-container hover:text-on-primary-container" data-cat="fertilidad">Fertilidad</button>
-<button class="filter-btn bg-surface-container text-on-surface-variant px-4 py-2 rounded-full font-label-caps text-label-caps transition-all hover:scale-[1.03] hover:bg-primary-container hover:text-on-primary-container" data-cat="menopausia">Menopausia</button>
-<button class="filter-btn bg-surface-container text-on-surface-variant px-4 py-2 rounded-full font-label-caps text-label-caps transition-all hover:scale-[1.03] hover:bg-primary-container hover:text-on-primary-container" data-cat="aborto">Aborto</button>
-<button class="filter-btn bg-surface-container text-on-surface-variant px-4 py-2 rounded-full font-label-caps text-label-caps transition-all hover:scale-[1.03] hover:bg-primary-container hover:text-on-primary-container" data-cat="hormonal">Trastornos Hormonales</button>
-<button class="filter-btn bg-surface-container text-on-surface-variant px-4 py-2 rounded-full font-label-caps text-label-caps transition-all hover:scale-[1.03] hover:bg-primary-container hover:text-on-primary-container" data-cat="oncologia">Oncología</button>
-<button class="filter-btn bg-surface-container text-on-surface-variant px-4 py-2 rounded-full font-label-caps text-label-caps transition-all hover:scale-[1.03] hover:bg-primary-container hover:text-on-primary-container" data-cat="urologia">Urología</button>
-<button class="filter-btn bg-surface-container text-on-surface-variant px-4 py-2 rounded-full font-label-caps text-label-caps transition-all hover:scale-[1.03] hover:bg-primary-container hover:text-on-primary-container" data-cat="estetica">Estética</button>
-</div>
-<!-- Conditions List -->
-<div class="flex flex-wrap gap-2 justify-center min-h-[60px]" id="enfermedades-list"></div>
-<p class="hidden text-center font-body-md text-body-md text-on-surface-variant py-8" id="no-results">No se encontraron resultados para tu búsqueda.</p>
-<p class="text-center font-body-sm text-body-sm text-on-surface-variant mt-6 opacity-60" id="results-count"></p>
 </div>
 </section>
 <!-- Testimonios Preview -->
@@ -412,10 +511,10 @@ Ver todas las opiniones
       <div class="flex-1">
         <p class="font-headline-sm text-headline-sm text-on-surface mb-1">WhatsApp</p>
         <p class="font-body-sm text-body-sm text-on-surface-variant">+52 1 55 7664 5037</p>
-        <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Respuesta en horario de oficina</p>
+        <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Ideal para resolver dudas, costos, preparacion previa y seguimiento.</p>
       </div>
       <span class="inline-flex items-center gap-1 font-label-caps text-label-caps text-primary group-hover:gap-2 transition-all">
-        Enviar mensaje <span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span>
+        Resolver dudas por WhatsApp <span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span>
       </span>
     </a>
 
@@ -464,25 +563,90 @@ Ver todas las opiniones
 
   </div>
 
-  <!-- CTA Banner -->
-  <div class="bg-primary-container rounded-[32px] px-8 py-12 text-center">
-    <h3 class="font-headline-sm text-headline-sm text-on-primary-container mb-3">¿Lista para tu primera consulta?</h3>
-    <p class="font-body-md text-body-md text-on-primary-container opacity-80 mb-8 max-w-md mx-auto">
-      Agenda hoy y da el primer paso hacia tu bienestar con atención especializada.
-    </p>
-    <div class="flex flex-wrap gap-4 justify-center">
-      <button data-open-agenda
-              class="inline-flex items-center gap-2 bg-surface text-primary px-8 py-3 rounded-lg font-body-md text-body-md font-semibold hover:scale-[1.02] transition-transform shadow-[0_4px_20px_rgba(74,74,74,0.12)]">
-        <span class="material-symbols-outlined" style="font-size:20px">calendar_month</span>
-        Agendar cita
-      </button>
-      <a href="https://wa.me/5215576645037" target="_blank" rel="noopener noreferrer"
-         class="inline-flex items-center gap-2 border border-on-primary-container/60 text-on-primary-container px-8 py-3 rounded-lg font-body-md text-body-md font-semibold hover:bg-on-primary-container/10 transition-colors">
-        <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-        </svg>
-        Enviar WhatsApp
-      </a>
+</section>
+
+<!-- Agenda Personalizada (Demo con BE simulado) -->
+<section id="reserva-google-inline" class="max-w-7xl mx-auto px-grid-margin py-section-gap-desktop" aria-labelledby="booking-inline-title">
+  <div class="text-center max-w-3xl mx-auto mb-10">
+    <span class="font-label-caps text-label-caps text-primary uppercase tracking-widest">Demo agenda personalizada</span>
+    <h2 id="booking-inline-title" class="font-headline-md text-headline-md text-primary mt-2 mb-4">Reserva tu cita con una experiencia a la medida</h2>
+    <p class="font-body-md text-body-md text-on-surface-variant">Este componente simula el backend de disponibilidad y reservas para una demo funcional. La integracion productiva puede apuntar despues a Google Calendar real desde tu core Java.</p>
+  </div>
+
+  <div class="booking-shell" id="demo-booking-shell" aria-live="polite" aria-busy="true">
+    <div class="booking-loader" id="demo-booking-loader">
+      <div class="booking-spinner" aria-hidden="true"></div>
+      <p class="font-body-sm text-body-sm text-on-surface-variant">Inicializando disponibilidad de agenda...</p>
+    </div>
+
+    <div class="booking-layout">
+      <article class="booking-surface p-5 md:p-6 space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <h3 class="font-headline-sm text-headline-sm text-primary">Selecciona fecha y horario</h3>
+          <span class="inline-flex items-center gap-2 text-on-surface-variant bg-surface-container-low px-3 py-1.5 rounded-full font-body-sm text-body-sm">
+            <span class="material-symbols-outlined" style="font-size:16px">memory</span>
+            Demo BE simulado
+          </span>
+        </div>
+
+        <div class="flex items-center justify-between gap-3">
+          <button id="demo-week-prev" type="button" class="inline-flex items-center gap-1 px-3 py-2 rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container-low transition-colors">
+            <span class="material-symbols-outlined" style="font-size:18px">chevron_left</span>
+            Semana anterior
+          </button>
+          <p id="demo-week-label" class="font-body-md text-body-md text-primary font-semibold"></p>
+          <button id="demo-week-next" type="button" class="inline-flex items-center gap-1 px-3 py-2 rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container-low transition-colors">
+            Siguiente semana
+            <span class="material-symbols-outlined" style="font-size:18px">chevron_right</span>
+          </button>
+        </div>
+
+        <div id="demo-days" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2"></div>
+
+        <div>
+          <p class="font-label-caps text-label-caps text-primary uppercase tracking-widest mb-3">Horarios disponibles</p>
+          <div id="demo-slots" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2"></div>
+        </div>
+      </article>
+
+      <aside class="booking-surface p-5 md:p-6 space-y-4">
+        <h3 class="font-headline-sm text-headline-sm text-primary">Confirmar cita</h3>
+        <div id="demo-selected-summary" class="bg-surface-container-low rounded-xl px-4 py-3 text-on-surface-variant font-body-sm text-body-sm">
+          Aun no seleccionas fecha y hora.
+        </div>
+
+        <form id="demo-booking-form" class="space-y-3" novalidate>
+          <div>
+            <label for="demo-name" class="block font-body-sm text-body-sm text-on-surface-variant mb-1">Nombre completo</label>
+            <input id="demo-name" name="name" required type="text" class="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary" placeholder="Ej. María González" />
+          </div>
+          <div>
+            <label for="demo-phone" class="block font-body-sm text-body-sm text-on-surface-variant mb-1">Teléfono</label>
+            <input id="demo-phone" name="phone" required type="tel" class="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary" placeholder="55 1234 5678" />
+          </div>
+          <div>
+            <label for="demo-service" class="block font-body-sm text-body-sm text-on-surface-variant mb-1">Tipo de consulta</label>
+            <select id="demo-service" name="service" required class="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary">
+              <option value="" selected disabled>Selecciona una opción</option>
+              <option value="Consulta de primera vez">Consulta de primera vez</option>
+              <option value="Consulta de seguimiento">Consulta de seguimiento</option>
+              <option value="Control prenatal">Control prenatal</option>
+              <option value="Videoconsulta">Videoconsulta</option>
+            </select>
+          </div>
+          <button id="demo-booking-submit" type="submit" class="w-full inline-flex items-center justify-center gap-2 bg-primary-container text-on-primary-container py-3 rounded-lg font-body-md text-body-md font-semibold hover:scale-[1.01] transition-transform shadow-[0_4px_20px_rgba(74,74,74,0.08)]">
+            <span class="material-symbols-outlined" style="font-size:18px">event_available</span>
+            Reservar cita demo
+          </button>
+        </form>
+
+        <p id="demo-feedback" class="hidden rounded-lg px-3 py-2 font-body-sm text-body-sm"></p>
+
+        <div>
+          <p class="font-label-caps text-label-caps text-primary uppercase tracking-widest mb-2">Proximas reservas simuladas</p>
+          <ul id="demo-reservations-preview" class="space-y-2"></ul>
+        </div>
+      </aside>
     </div>
   </div>
 </section>
@@ -713,6 +877,8 @@ Ver todas las opiniones
   </div><!-- /panel -->
 </div><!-- /modal -->
 
-<script src="js/app.js" defer></script>
+</div>
+
 <script src="js/agenda.js" defer></script>
+<script src="js/booking-demo.js" defer></script>
 </body></html>
