@@ -1,22 +1,10 @@
 (function () {
-    var STORAGE_KEY = "swap_demo_bookings_v1";
-    var DEMO_LATENCY_MS = 520;
 
     var DAYS_ES = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"];
     var MONTHS_ES = [
         "ene", "feb", "mar", "abr", "may", "jun",
         "jul", "ago", "sep", "oct", "nov", "dic"
     ];
-
-    var RULES = {
-        1: ["09:00", "09:45", "11:00", "12:15", "16:00", "17:15"],
-        2: ["09:00", "10:15", "11:30", "16:30", "17:30"],
-        3: ["10:00", "11:00", "12:00", "16:00"],
-        4: ["09:00", "10:30", "12:00", "15:30", "17:00"],
-        5: ["10:00", "11:30", "13:00", "15:00"],
-        6: [],
-        0: []
-    };
 
     var state = {
         weekOffset: 0,
@@ -26,6 +14,24 @@
         selectedSlot: null,
         busy: false
     };
+
+    function track(name, payload) {
+        if (window.SwapTracking && typeof window.SwapTracking.track === "function") {
+            window.SwapTracking.track(name, payload || {});
+        }
+    }
+
+    function sanitizePhone(value) {
+        return String(value || "").replace(/\D/g, "").slice(0, 10);
+    }
+
+    function setupPhoneInput(id) {
+        var input = document.getElementById(id);
+        if (!input) return;
+        input.addEventListener("input", function () {
+            input.value = sanitizePhone(input.value);
+        });
+    }
 
     function pad(value) {
         return value < 10 ? "0" + value : String(value);
@@ -50,105 +56,41 @@
         return d;
     }
 
-    function getStorage() {
-        try {
-            return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-        } catch (error) {
-            return [];
+    function ensureApiClient() {
+        if (!window.SwapApiClient) {
+            throw new Error("No se encontro el cliente API. Verifica que js/api-client.js este cargado.");
         }
+        return window.SwapApiClient;
     }
 
-    function setStorage(items) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-    }
-
-    function seedReservationsIfNeeded() {
-        var items = getStorage();
-        if (items.length > 0) return;
-        var today = startOfDay(new Date());
-
-        var first = new Date(today);
-        first.setDate(today.getDate() + 1);
-
-        var second = new Date(today);
-        second.setDate(today.getDate() + 3);
-
-        setStorage([
-            {
-                id: "seed-1",
-                dateKey: toDateKey(first),
-                time: "10:15",
-                name: "Paciente Demo",
-                service: "Consulta de seguimiento",
-                createdAt: new Date().toISOString()
-            },
-            {
-                id: "seed-2",
-                dateKey: toDateKey(second),
-                time: "16:00",
-                name: "Paciente Demo 2",
-                service: "Control prenatal",
-                createdAt: new Date().toISOString()
-            }
-        ]);
-    }
-
-    function withLatency(data) {
-        return new Promise(function (resolve) {
-            setTimeout(function () {
-                resolve(data);
-            }, DEMO_LATENCY_MS);
-        });
-    }
-
-    // Simulates backend endpoint: GET /availability?from=...&to=...
-    function apiFetchAvailability(fromDate, toDate) {
-        var reservations = getStorage();
-        var map = {};
+    function normalizeAvailability(map, fromDate, toDate) {
+        var safeMap = map && typeof map === "object" ? map : {};
+        var normalized = {};
         var cursor = startOfDay(fromDate);
         var end = startOfDay(toDate);
 
         while (cursor <= end) {
             var key = toDateKey(cursor);
-            var baseSlots = (RULES[cursor.getDay()] || []).slice();
-            var reserved = reservations
-                .filter(function (item) { return item.dateKey === key; })
-                .map(function (item) { return item.time; });
-            map[key] = baseSlots.filter(function (slot) { return reserved.indexOf(slot) === -1; });
+            normalized[key] = Array.isArray(safeMap[key]) ? safeMap[key] : [];
             cursor.setDate(cursor.getDate() + 1);
         }
-
-        return withLatency(map);
+        return normalized;
     }
 
-    // Simulates backend endpoint: POST /bookings
-    function apiCreateBooking(payload) {
-        var reservations = getStorage();
-        var exists = reservations.some(function (item) {
-            return item.dateKey === payload.dateKey && item.time === payload.time;
-        });
+    function apiFetchAvailability(fromDate, toDate) {
+        var api = ensureApiClient();
+        var fromKey = toDateKey(fromDate);
+        var toKey = toDateKey(toDate);
 
-        if (exists) {
-            return new Promise(function (_, reject) {
-                setTimeout(function () {
-                    reject(new Error("El horario ya fue reservado. Actualiza la agenda y elige otro."));
-                }, DEMO_LATENCY_MS);
+        return api.getAvailability(fromKey, toKey)
+            .then(function (map) {
+                return normalizeAvailability(map, fromDate, toDate);
             });
-        }
+    }
 
-        var booking = {
-            id: "res-" + Date.now(),
-            dateKey: payload.dateKey,
-            time: payload.time,
-            name: payload.name,
-            phone: payload.phone,
-            service: payload.service,
-            createdAt: new Date().toISOString()
-        };
-
-        reservations.push(booking);
-        setStorage(reservations);
-        return withLatency(booking);
+    function apiCreateBooking(payload) {
+        var api = ensureApiClient();
+        return api.createBooking(payload);
     }
 
     function getWeekDates() {
@@ -186,17 +128,37 @@
         el.textContent = message;
     }
 
+    function clearFeedback() {
+        var el = document.getElementById("demo-feedback");
+        if (!el) return;
+        el.classList.add("hidden");
+        el.textContent = "";
+        el.classList.remove("bg-error-container", "text-on-error-container", "bg-primary-fixed", "text-on-primary-fixed");
+    }
+
     function updateSummary() {
         var el = document.getElementById("demo-selected-summary");
         if (!el) return;
 
         if (!state.selectedDate || !state.selectedSlot) {
-            el.textContent = "Aun no seleccionas fecha y hora.";
+            el.innerHTML = '<span style="display:flex;align-items:center;gap:6px;color:#9e8a8a">' +
+                '<span class="material-symbols-outlined" style="font-size:16px">touch_app</span>' +
+                'Selecciona fecha y horario para continuar.' +
+                '</span>';
+            el.style.cssText = "background:#f5f3f3;border:1.5px dashed #d4c2c3;";
             return;
         }
 
         var date = fromDateKey(state.selectedDate);
-        el.textContent = "Seleccionaste: " + labelDate(date) + " a las " + state.selectedSlot + " hrs.";
+        el.innerHTML =
+            '<div style="display:flex;align-items:flex-start;gap:10px">' +
+              '<span class="material-symbols-outlined" style="font-size:20px;color:#7c5357;margin-top:1px;flex-shrink:0">event_available</span>' +
+              '<div>' +
+                '<p style="font-weight:700;color:#7c5357;font-size:14px">' + labelDate(date) + ' &middot; ' + state.selectedSlot + ' hrs</p>' +
+                '<p style="font-size:12px;color:#504444;margin-top:2px">Cita confirmada al completar el formulario.</p>' +
+              '</div>' +
+            '</div>';
+        el.style.cssText = "background:linear-gradient(135deg,#ffdadc22 0%,#fdf8f8 100%);border:1.5px solid #e8b4b8;";
     }
 
     function renderDays() {
@@ -221,18 +183,21 @@
                 (isActive ? "is-active" : "") + " " +
                 (disabled ? "is-disabled" : "");
             button.disabled = disabled;
+            var pillLabel = disabled ? "Sin hrs" : (slots.length + " hrs");
             button.innerHTML =
-                '<p class="font-label-caps text-label-caps">' + DAYS_ES[date.getDay()] + '</p>' +
-                '<p class="font-headline-sm text-headline-sm leading-none mt-1">' + date.getDate() + '</p>' +
-                '<p class="font-body-sm text-body-sm mt-1">' + slots.length + ' horarios</p>';
+                '<p class="font-label-caps text-label-caps uppercase tracking-widest">' + DAYS_ES[date.getDay()] + '</p>' +
+                '<p class="font-headline-sm text-headline-sm leading-none mt-1" style="font-size:22px">' + date.getDate() + '</p>' +
+                '<span class="booking-day-pill">' + pillLabel + '</span>';
 
             if (!disabled) {
                 button.addEventListener("click", function () {
+                    clearFeedback();
                     state.selectedDate = key;
                     state.selectedSlot = null;
                     renderDays();
                     renderSlots();
                     updateSummary();
+                    track("booking_demo_day_selected", { dateKey: key });
                 });
             }
 
@@ -261,43 +226,17 @@
             var button = document.createElement("button");
             button.type = "button";
             button.className = "booking-slot rounded-lg py-2 font-label-caps text-label-caps " + (isActive ? "is-active" : "");
-            button.textContent = slot;
+            button.innerHTML = '<span class="material-symbols-outlined" style="font-size:13px;line-height:1;opacity:.7">schedule</span>' + slot;
             button.addEventListener("click", function () {
                 state.selectedSlot = slot;
                 renderSlots();
                 updateSummary();
+                track("booking_demo_slot_selected", {
+                    dateKey: state.selectedDate,
+                    time: slot
+                });
             });
             container.appendChild(button);
-        });
-    }
-
-    function renderReservationsPreview() {
-        var list = document.getElementById("demo-reservations-preview");
-        if (!list) return;
-
-        var reservations = getStorage()
-            .slice()
-            .sort(function (a, b) {
-                var left = a.dateKey + " " + a.time;
-                var right = b.dateKey + " " + b.time;
-                return left < right ? -1 : 1;
-            })
-            .slice(0, 4);
-
-        list.innerHTML = "";
-        if (reservations.length === 0) {
-            list.innerHTML = '<li class="font-body-sm text-body-sm text-on-surface-variant">Sin reservas registradas.</li>';
-            return;
-        }
-
-        reservations.forEach(function (item) {
-            var li = document.createElement("li");
-            var date = fromDateKey(item.dateKey);
-            li.className = "bg-surface-container-low rounded-lg px-3 py-2";
-            li.innerHTML =
-                '<p class="font-body-sm text-body-sm text-on-surface"><strong>' + labelDate(date) + '</strong> - ' + item.time + '</p>' +
-                '<p class="font-body-sm text-body-sm text-on-surface-variant">' + item.name + " / " + item.service + '</p>';
-            list.appendChild(li);
         });
     }
 
@@ -333,11 +272,11 @@
 
                 renderDays();
                 renderSlots();
-                renderReservationsPreview();
                 updateSummary();
             })
-            .catch(function () {
-                showFeedback("error", "No se pudo cargar disponibilidad demo. Intenta de nuevo.");
+            .catch(function (error) {
+                showFeedback("error", (error && error.message) || "No se pudo cargar disponibilidad. Intenta de nuevo.");
+                track("booking_demo_load_error", { reason: "availability_request_failed" });
             })
             .finally(function () {
                 setBusy(false);
@@ -348,16 +287,26 @@
         event.preventDefault();
 
         var name = document.getElementById("demo-name").value.trim();
-        var phone = document.getElementById("demo-phone").value.trim();
+        var phoneInput = document.getElementById("demo-phone");
+        var phone = sanitizePhone(phoneInput ? phoneInput.value : "");
+        if (phoneInput) phoneInput.value = phone;
         var service = document.getElementById("demo-service").value;
 
         if (!name || !phone || !service) {
             showFeedback("error", "Completa nombre, telefono y tipo de consulta.");
+            track("booking_demo_validation_error", { reason: "missing_fields" });
+            return;
+        }
+
+        if (phone.length !== 10) {
+            showFeedback("error", "El telefono debe tener exactamente 10 digitos.");
+            track("booking_demo_validation_error", { reason: "invalid_phone_length" });
             return;
         }
 
         if (!state.selectedDate || !state.selectedSlot) {
             showFeedback("error", "Selecciona fecha y horario antes de reservar.");
+            track("booking_demo_validation_error", { reason: "missing_slot" });
             return;
         }
 
@@ -370,21 +319,31 @@
             time: state.selectedSlot,
             name: name,
             phone: phone,
-            service: service
+            email: null,
+            service: service,
+            notes: null,
+            firstVisit: false
         })
-            .then(function () {
-                showFeedback("success", "Cita demo reservada correctamente. La agenda se actualizo en tiempo real.");
+            .then(function (bookingResponse) {
+                var confirmation = bookingResponse && bookingResponse.confirmationCode ?
+                    (" Código: " + bookingResponse.confirmationCode + ".") : "";
+                showFeedback("success", "Cita reservada correctamente." + confirmation);
                 document.getElementById("demo-booking-form").reset();
                 state.selectedSlot = null;
+                track("booking_demo_reserved", {
+                    dateKey: state.selectedDate,
+                    service: service
+                });
                 return loadWeek();
             })
             .catch(function (error) {
                 showFeedback("error", error.message || "No se pudo reservar el horario.");
+                track("booking_demo_submit_error", { reason: "already_taken_or_error" });
                 loadWeek();
             })
             .finally(function () {
                 submitButton.disabled = false;
-                submitButton.innerHTML = '<span class="material-symbols-outlined" style="font-size:18px">event_available</span>Reservar cita demo';
+                submitButton.innerHTML = '<span class="material-symbols-outlined" style="font-size:18px">event_available</span>Reservar cita';
             });
     }
 
@@ -392,7 +351,7 @@
         var shell = document.getElementById("demo-booking-shell");
         if (!shell) return;
 
-        seedReservationsIfNeeded();
+        setupPhoneInput("demo-phone");
 
         var prevButton = document.getElementById("demo-week-prev");
         var nextButton = document.getElementById("demo-week-next");
@@ -400,6 +359,7 @@
 
         if (prevButton) {
             prevButton.addEventListener("click", function () {
+                clearFeedback();
                 state.weekOffset -= 1;
                 state.selectedDate = null;
                 state.selectedSlot = null;
@@ -409,6 +369,7 @@
 
         if (nextButton) {
             nextButton.addEventListener("click", function () {
+                clearFeedback();
                 state.weekOffset += 1;
                 state.selectedDate = null;
                 state.selectedSlot = null;
@@ -421,6 +382,7 @@
         }
 
         loadWeek();
+        track("booking_demo_loaded", { mode: "backend" });
     }
 
     document.addEventListener("DOMContentLoaded", init);

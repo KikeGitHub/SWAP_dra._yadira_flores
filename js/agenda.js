@@ -1,6 +1,34 @@
 (function () {
-    var WA_NUMBER = "5215576645037";
-    var WA_BASE = "https://wa.me/" + WA_NUMBER;
+    function getConfig() {
+        return window.AppConfig || {};
+    }
+
+    function getWhatsAppNumber() {
+        var cfg = getConfig();
+        return (cfg.contacts && cfg.contacts.whatsappE164) || "5215576645037";
+    }
+
+    function waBase() {
+        return "https://wa.me/" + getWhatsAppNumber();
+    }
+
+    function track(name, payload) {
+        if (window.SwapTracking && typeof window.SwapTracking.track === "function") {
+            window.SwapTracking.track(name, payload || {});
+        }
+    }
+
+    function sanitizePhone(value) {
+        return String(value || "").replace(/\D/g, "").slice(0, 10);
+    }
+
+    function setupPhoneInput(id) {
+        var input = document.getElementById(id);
+        if (!input) return;
+        input.addEventListener("input", function () {
+            input.value = sanitizePhone(input.value);
+        });
+    }
 
     // Simulated available slots per weekday (0=Sun … 6=Sat)
     var SLOTS = {
@@ -61,6 +89,7 @@
         renderSlots();
         document.getElementById("agenda-modal").classList.remove("hidden");
         document.body.style.overflow = "hidden";
+        track("booking_modal_open", { source: "manual" });
     }
 
     function closeModal() {
@@ -76,16 +105,21 @@
         var fallback = document.getElementById("google-booking-fallback");
         if (!section || !shell || !frame || !fallback) return;
 
-        var cfg = window.GoogleBookingConfig || {};
-        var bookingUrl = cfg.bookingUrl || frame.getAttribute("data-booking-url") || "";
+        var cfg = getConfig();
+        var bookingCfg = cfg.booking || {};
+        var legacyCfg = window.GoogleBookingConfig || {};
+        var bookingUrl = bookingCfg.googleBookingUrl || legacyCfg.bookingUrl || frame.getAttribute("data-booking-url") || "";
+        var fallbackText = "Hola Dra. vengo de su web y quiero confirmar mi cita.";
+
         frame.setAttribute("data-booking-url", bookingUrl);
-        fallback.href = bookingUrl;
+        fallback.href = waBase() + "?text=" + encodeURIComponent(fallbackText);
 
         // Keeps the current WhatsApp modal as fallback while URL is still placeholder.
         var hasRealUrl = bookingUrl && bookingUrl.indexOf("TU_URL_DE_RESERVA") === -1;
         if (!hasRealUrl) {
             shell.classList.add("is-loaded");
             shell.setAttribute("aria-busy", "false");
+            track("booking_inline_fallback", { reason: "missing_google_url" });
             return;
         }
 
@@ -110,6 +144,7 @@
         var hydrateFrame = function () {
             if (frame.getAttribute("src")) return;
             frame.setAttribute("src", bookingUrl);
+            track("booking_inline_hydrated", { source: "google" });
         };
 
         if ("IntersectionObserver" in window) {
@@ -134,6 +169,16 @@
             return;
         }
         section.scrollIntoView({ behavior: "smooth", block: "start" });
+        track("booking_scroll_to_inline", { source: "cta" });
+    }
+
+    function applyDynamicWhatsAppLinks() {
+        var number = getWhatsAppNumber();
+        document.querySelectorAll("a[data-wa-link]").forEach(function (link) {
+            var context = link.getAttribute("data-wa-context") || "web";
+            var message = "Hola Dra. vengo de su web y quiero confirmar mi cita. (" + context + ")";
+            link.href = "https://wa.me/" + number + "?text=" + encodeURIComponent(message);
+        });
     }
 
     /* ── tabs ── */
@@ -141,6 +186,7 @@
         state.tab = tab;
         state.selectedDayIndex = null;
         state.selectedTime = null;
+        track("booking_modal_tab_change", { tab: tab });
 
         // tab buttons
         ["presencial", "video"].forEach(function (t) {
@@ -249,7 +295,9 @@
     /* ── submit → WhatsApp ── */
     function buildMessage() {
         var nombre = document.getElementById("ag-nombre").value.trim();
-        var telefono = document.getElementById("ag-telefono").value.trim();
+        var telefonoInput = document.getElementById("ag-telefono");
+        var telefono = sanitizePhone(telefonoInput ? telefonoInput.value : "");
+        if (telefonoInput) telefonoInput.value = telefono;
         var email = document.getElementById("ag-email").value.trim();
         var servicio = document.getElementById("ag-servicio").value;
         var motivo = document.getElementById("ag-motivo").value.trim();
@@ -259,7 +307,11 @@
             showFormError("Por favor completa nombre, teléfono y tipo de consulta.");
             return null;
         }
-        if (!state.selectedDayIndex === null || state.selectedTime === null) {
+        if (telefono.length !== 10) {
+            showFormError("El teléfono debe tener exactamente 10 dígitos.");
+            return null;
+        }
+        if (state.selectedDayIndex === null || state.selectedTime === null) {
             showFormError("Por favor selecciona un día y horario.");
             return null;
         }
@@ -295,13 +347,16 @@
     function handleSubmit() {
         var msg = buildMessage();
         if (!msg) return;
-        var url = WA_BASE + "?text=" + encodeURIComponent(msg);
+        var url = waBase() + "?text=" + encodeURIComponent(msg);
+        track("booking_modal_submit_whatsapp", { tab: state.tab });
         window.open(url, "_blank", "noopener,noreferrer");
     }
 
     /* ── init ── */
     document.addEventListener("DOMContentLoaded", function () {
+        applyDynamicWhatsAppLinks();
         initInlineBooking();
+        setupPhoneInput("ag-telefono");
 
         // open triggers
         document.querySelectorAll("[data-open-agenda]").forEach(function (el) {
